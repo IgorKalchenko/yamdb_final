@@ -15,8 +15,8 @@ from rest_framework_simplejwt.tokens import AccessToken
 from reviews.models import Category, Genre, Review, Title
 
 from .filters import TitleFilter
-from .permissions import (IsAdminRole, IsReadOnly,
-                          RetrieveOnlyOrHasCUDPermissions, IsMe)
+from .permissions import (IsAdminRole, IsMe, IsReadOnly,
+                          RetrieveOnlyOrHasCUDPermissions)
 from .serializers import (AdminUserSerializer, CategorySerializer,
                           CommentSerializer, ConfirmationCodeSerializer,
                           GenreSerializer, JWTTokenSerializer, MeSerializer,
