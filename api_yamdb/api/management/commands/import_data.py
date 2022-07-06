@@ -42,4 +42,4 @@ class Command(BaseCommand):
             self.stdout.write(
                 f'Выполнен импорт данных для таблицы {model.__name__}.'
             )
-        return
+        return f'Выполнен импорт данных для таблицы {model.__name__}.'
