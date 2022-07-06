@@ -43,7 +43,7 @@ jobs:
     - name: Push to Docker Hub
       uses: docker/build-push-action@v2
       with:
-        context: .
+        context: api_yamdb/
         push: true
         tags: igorkalchenko/api_yamdb:latest
 
