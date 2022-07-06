@@ -82,4 +82,4 @@ Y
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-![workflow](https://github.com/IgorKalchenko/yamdb_fina/actions/workflows/yamdb_workflow.yml/badge.svg)
+![workflow](https://github.com/IgorKalchenko/yamdb_final/actions/workflows/yamdb_workflow.yml/badge.svg)
