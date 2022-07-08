@@ -8,8 +8,7 @@ services:
     env_file:
       - ./.env
   web:
-    image: igorkalchenko/api_yamdb:v1.2
-    # build: ../api_yamdb/
+    image: igorkalchenko/api_yamdb:latest
     restart: always
     volumes:
       - static_value:/app/static/
