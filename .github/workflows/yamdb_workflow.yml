@@ -61,7 +61,7 @@ jobs:
         script: |
             sudo docker pull igorkalchenko/api_yamdb:latest
             sudo docker compose stop
-            sudo docker compose rm -f web
+            sudo docker compose rm web
             touch .env
             echo -n > .env
             echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
