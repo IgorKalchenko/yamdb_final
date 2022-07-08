@@ -24,11 +24,11 @@ API для сервиса YaMDb. Позволяет работать со сле
 Клонировать репозиторий и перейти в него в командной строке:
 
 ```
-git clone https://github.com/IgorKalchenko/infra_sp2.git
+git clone https://github.com/IgorKalchenko/yamdb_final.git
 ```
 
 ```
-cd infra_sp2
+cd yamdb_final
 ```
 Перейти в директорию 'infra':
 
@@ -72,6 +72,11 @@ docker-compose exec web python manage.py import_data
 ```
 Y
 ```
+
+## Проект на сервере
+
+Проект доступен по [ссылке](http://51.250.108.223/api/v1/)
+
 
 ## Участники
 [Игорь Кальченко](https://github.com/IgorKalchenko) - управление пользователями (Auth и Users): система регистрации и аутентификации, права доступа, работа с токеном, система подтверждения e-mail, поля.
