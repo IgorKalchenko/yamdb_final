@@ -27,8 +27,8 @@ class Command(BaseCommand):
             Genre.objects.all().delete()
             Title.objects.all().delete()
         elif answer == 'n':
-            return 'Операция пропущена.'
-        elif answer != 'y' or answer != 'n':
+            self.stdout.write('Операция пропущена.')
+        else:
             return 'Введено некорректное значение.'
         for model, csv_file in Models.items():
             with open(
