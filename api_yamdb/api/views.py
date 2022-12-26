@@ -27,6 +27,11 @@ User = get_user_model()
 
 
 def send_code(user):
+    '''
+    Function that is responsible for
+    generating confirmation code for a user
+    and sending email with the code to them.
+    '''
     confirmation_code = default_token_generator.make_token(user)
     send_mail(
         'Код подтверждения',
@@ -40,6 +45,9 @@ def send_code(user):
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def send_confirmation_code(request):
+    '''
+    View function responsible for signup of new users.
+    '''
     serializer = ConfirmationCodeSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     username = serializer.validated_data.get('username')
@@ -53,13 +61,17 @@ def send_confirmation_code(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     send_code(user)
     if created:
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def get_jwt_token(request):
+    '''
+    Responsible for generating jwt tokens.
+    In case of successful request it returns user's jwt token to access API.
+    '''
     serializer = JWTTokenSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     username = serializer.validated_data.get('username')
@@ -75,6 +87,12 @@ def get_jwt_token(request):
 
 
 class AdminUserViewSet(viewsets.ModelViewSet):
+    '''
+    ViewSet to handle requests to the '.../api/v1/users/' endpoint.
+    Permission to interact with the ViewSet is entrusted only to
+    users with admin role.
+    Endpoint '.../users/me/' is accessible only to an owner of an account.
+    '''
     queryset = User.objects.all()
     serializer_class = AdminUserSerializer
     permission_classes = (IsAdminRole,)
@@ -107,6 +125,10 @@ class CreateListViewSet(
     mixins.DestroyModelMixin,
     viewsets.GenericViewSet
 ):
+    '''
+    Base ViewSet that supports only requests
+    to create, destroy or return a list of objects.
+    '''
     permission_classes = [IsReadOnly | IsAdminRole]
     filter_backends = [SearchFilter]
     search_fields = ['name']
@@ -114,16 +136,27 @@ class CreateListViewSet(
 
 
 class CategoryViewSet(CreateListViewSet):
+    '''
+    ViewSet to handle requests to the '.../api/v1/categories/' endpoint.
+    Inherits from CreateListViewSet.
+    '''
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
 
 class GenreViewSet(CreateListViewSet):
+    '''
+    ViewSet to handle requests to the '.../api/v1/genres/' endpoint.
+    Inherits from CreateListViewSet.
+    '''
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
 
 
 class TitleViewSet(viewsets.ModelViewSet):
+    '''
+    ViewSet to handle requests to the '.../api/v1/titles/' endpoint.
+    '''
     queryset = Title.objects.annotate(rating=Avg('reviews__score'))
     permission_classes = [IsReadOnly | IsAdminRole]
     filter_backends = (DjangoFilterBackend,)
@@ -136,6 +169,12 @@ class TitleViewSet(viewsets.ModelViewSet):
 
 
 class ReviewView(viewsets.ModelViewSet):
+    '''
+    ViewSet to handle requests to
+    the r'titles/(?P<title_id>\d+)/reviews' endpoint.
+    Anyone has the permission to retrive an object.
+    Only author, admin and moderator can modify an object.
+    '''
     serializer_class = ReviewSerializer
     permission_classes = [RetrieveOnlyOrHasCUDPermissions]
 
@@ -149,6 +188,12 @@ class ReviewView(viewsets.ModelViewSet):
 
 
 class CommentView(viewsets.ModelViewSet):
+    '''
+    ViewSet to handle requests to the
+    r'titles/(?P<title_id>\d+)/reviews/(?P<review_id>\d+)/comments' endpoint.
+    Anyone has the permission to retrive an object.
+    Only author, admin and moderator can modify an object.
+    '''
     serializer_class = CommentSerializer
     permission_classes = [RetrieveOnlyOrHasCUDPermissions]
 

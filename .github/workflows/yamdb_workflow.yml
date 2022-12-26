@@ -86,3 +86,8 @@ jobs:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
         message: ${{ github.workflow }} executed succsessfully!
+
+            sudo docker compose exec backend python manage.py makemigrations
+            sudo docker compose exec backend python manage.py migrate
+            sudo docker compose exec backend python manage.py collectstatic --no-input
+            sudo docker compose exec backend python manage.py import_ingredients /app/data/ingredients.csv

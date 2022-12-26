@@ -4,6 +4,10 @@ from reviews.models import Category, Comment, Genre, Review, Title, User
 
 
 class MeSerializer(serializers.ModelSerializer):
+    '''
+    Serializer to handle User instances for
+    '.../users/me/' endpoint.
+    '''
     role = serializers.CharField(read_only=True)
     username = serializers.CharField(
         required=True,
@@ -38,6 +42,10 @@ class MeSerializer(serializers.ModelSerializer):
 
 
 class AdminUserSerializer(MeSerializer):
+    '''
+    Serializer to handle User instances.
+    Inherits from MeSerializer.
+    '''
     CHOICES = User.CHOICES
     role = serializers.ChoiceField(
         read_only=False,
@@ -47,6 +55,10 @@ class AdminUserSerializer(MeSerializer):
 
 
 class ConfirmationCodeSerializer(serializers.Serializer):
+    '''
+    Serializer used to handle data for
+    the view function responsible for signup of new users.
+    '''
     username = serializers.CharField(
         required=True,
         max_length=150
@@ -66,11 +78,18 @@ class ConfirmationCodeSerializer(serializers.Serializer):
 
 
 class JWTTokenSerializer(serializers.Serializer):
+    '''
+    Serializer used to handle data for
+    the view function responsible generating jwt tokens.
+    '''
     username = serializers.CharField(required=True, max_length=150)
     confirmation_code = serializers.CharField(max_length=150)
 
 
 class CategorySerializer(serializers.ModelSerializer):
+    '''
+    Serializer used to handle Category instances.
+    '''
     class Meta:
         model = Category
         fields = ('name', 'slug')
@@ -78,6 +97,9 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class GenreSerializer(serializers.ModelSerializer):
+    '''
+    Serializer used to handle Genre instances.
+    '''
     class Meta:
         model = Genre
         fields = ('name', 'slug')
@@ -85,6 +107,10 @@ class GenreSerializer(serializers.ModelSerializer):
 
 
 class TitleViewSerializer(serializers.ModelSerializer):
+    '''
+    Serializer used to handle Title instances with
+    list and retrieve ViewSet methods.
+    '''
     genre = GenreSerializer(many=True, read_only=True)
     category = CategorySerializer(read_only=True)
     rating = serializers.FloatField()
@@ -96,6 +122,10 @@ class TitleViewSerializer(serializers.ModelSerializer):
 
 
 class TitlePostSerializer(serializers.ModelSerializer):
+    '''
+    Serializer used to handle Title instances with
+    create, destroy, update and partial update ViewSet methods.
+    '''
     genre = serializers.SlugRelatedField(
         queryset=Genre.objects.all(),
         slug_field='slug',
@@ -112,6 +142,9 @@ class TitlePostSerializer(serializers.ModelSerializer):
 
 
 class ReviewSerializer(serializers.ModelSerializer):
+    '''
+    Serializer used to handle Review instances.
+    '''
     author = serializers.SlugRelatedField(
         slug_field='username',
         read_only=True
@@ -133,6 +166,9 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    '''
+    Serializer used to handle Comment instances.
+    '''
     author = serializers.SlugRelatedField(
         slug_field='username',
         read_only=True

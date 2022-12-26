@@ -7,6 +7,11 @@ from django.utils.translation import gettext_lazy as _
 
 
 class User(AbstractUser):
+    '''
+    Creates customized User object.
+    Inherits from django AbstractUser model.
+    Defines 3 user roles: authenticated user, moderator, admin.
+    '''
     USER = 'user'
     MODERATOR = 'moderator'
     ADMIN = 'admin'
@@ -44,6 +49,7 @@ class User(AbstractUser):
 
 
 class Category(models.Model):
+    '''Creates Category objects.'''
     name = models.CharField(
         max_length=256,
         verbose_name='Категория'
@@ -62,6 +68,7 @@ class Category(models.Model):
 
 
 class Genre(models.Model):
+    '''Creates Genre objects.'''
     name = models.CharField(
         max_length=256,
         verbose_name='Жанр'
@@ -80,6 +87,7 @@ class Genre(models.Model):
 
 
 class Title(models.Model):
+    '''Creates Title objects.'''
     name = models.TextField(
         verbose_name='Наименование'
     )
@@ -116,6 +124,7 @@ class Title(models.Model):
 
 
 class Review(models.Model):
+    '''Creates Review objects.'''
     title = models.ForeignKey(
         Title,
         on_delete=models.CASCADE,
@@ -157,6 +166,7 @@ class Review(models.Model):
 
 
 class Comment(models.Model):
+    '''Creates Comment objects.'''
     review = models.ForeignKey(
         Review,
         on_delete=models.CASCADE,
